@@ -6,6 +6,10 @@ const app = express();
 const TOKEN = process.env.TOKEN;
 const URL = process.env.URL;
 
+app.get('/', function(request, response) {
+    response.send('twitter space api');
+});
+
 
 app.get('/api/twitter', async(req, res) => {
     var rq = require('request-promise');
