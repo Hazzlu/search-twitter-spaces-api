@@ -5,6 +5,7 @@ const app = express();
 
 const TOKEN = process.env.TOKEN;
 const URL = process.env.URL;
+const PORT = process.env.PORT || 5000;
 
 app.get('/', function(request, response) {
     response.send('twitter space api');
@@ -153,8 +154,9 @@ function dateChange(date) {
     date = dt[0] + "Z";
     return date;
 }
-
-app.listen(5000, () => console.log('Listening on port 5000'));
-
 console.log("URL: " + `${URL}`);
+
+app.listen(PORT, () => console.log('Listening on port ' + `${PORT}`));
+
+
 
