@@ -13,19 +13,19 @@ app.get('/', function(request, response) {
 
 
 app.get('/api/twitter', async(req, res) => {
-    var rq = require('request-promise');
+    let rq = require('request-promise');
 
     res.set({"Access-Control-Allow-Origin" : `${URL}`});
 
-    var header = {"Authorization" : `Bearer ${TOKEN}`};
+    let header = {"Authorization" : `Bearer ${TOKEN}`};
     
-    var reqUrl = "https://api.twitter.com/2/spaces/search?query=" + req.query.text
+    let reqUri = "https://api.twitter.com/2/spaces/search?query=" + req.query.text
                     + "&state=live&space.fields=participant_count,title,updated_at&expansions=creator_id&user.fields=username,profile_image_url"
     
     let bool = true;
     
-    var jsonget = function(uri, header) {
-        var options = {
+    let jsonget = function(uri, header) {
+        let options = {
             'method': 'GET',
             'headers': header,
             transform2xxOnly: true, 
@@ -36,7 +36,7 @@ app.get('/api/twitter', async(req, res) => {
         return rq(uri, options);
     }
 
-    let jsonResult = "defult";
+    let jsonResult;
 
     await jsonget(encodeURI(reqUrl),header)
     .then(function (json) {
@@ -70,15 +70,16 @@ function errorResult(result, resultErr) {
 
 
     let errornum;
-    var creator_id = [];
-    var id = [];
-    var participant_count = [];
-    var title = [];
-    var name = [];
-    var username = [];
-    var profile_image_url = [];
-    var updated_at = [];
-    var meta = result.meta.result_count - resultErr.length;
+    let creator_id = [];
+    let id = [];
+    let participant_count = [];
+    let title = [];
+    let name = [];
+    let username = [];
+    let profile_image_url = [];
+    let updated_at = [];
+    let meta = result.meta.result_count - resultErr.length;
+    let index;
 
 
     if(meta > 0){
@@ -116,15 +117,15 @@ function errorResult(result, resultErr) {
 }
 
 function spaceResult(result) {
-    var creator_id = [];
-    var id = [];
-    var participant_count = [];
-    var title = [];
-    var name = [];
-    var username = [];
-    var profile_image_url = [];
-    var updated_at = [];
-    var meta = result.meta.result_count;
+    let creator_id = [];
+    let id = [];
+    let participant_count = [];
+    let title = [];
+    let name = [];
+    let username = [];
+    let profile_image_url = [];
+    let updated_at = [];
+    let meta = result.meta.result_count;
 
     if(meta == 0){
         return({
@@ -150,8 +151,8 @@ function spaceResult(result) {
 }
 
 function dateChange(date) {
-    var dt = date.split(".");
-    date = dt[0] + "Z";
+    let dt = date.split(".");
+    date = dt[0] + "Z";　//ISO8601 ends with Z
     return date;
 }
 console.log("URL: " + `${URL}`);
