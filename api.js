@@ -42,6 +42,7 @@ app.get('/api/twitter', async(req, res) => {
     .then(function (json) {
         console.log(json);
         jsonResult = json;
+        console.log(json.includes.users);
         bool = true;
     })
     .catch(function (err) {
@@ -104,10 +105,16 @@ function errorResult(result, resultErr) {
             title.splice(errornum, 1);
             updated_at.splice(errornum, 1);
         }
-        for(i = 0; i < result.includes.users.length; i++){
-            name.push(result.includes.users[i].name);
-            username.push(result.includes.users[i].username);
-            profile_image_url.push(result.includes.users[i].profile_image_url);
+        for(i = 0; i < creator_id.length; i++){
+            for(j = 0; j < creator_id.length; j++){
+                if(result.includes.users[j].id == creator_id[i]){
+                    index = j;
+                    j = creator_id;
+                }
+            }
+            name.push(result.includes.users[index].name);
+            username.push(result.includes.users[index].username);
+            profile_image_url.push(result.includes.users[index].profile_image_url);
         }
         return({
             "creator_id": creator_id, "id": id, "participant_count": participant_count, "title": title,
@@ -145,9 +152,15 @@ function spaceResult(result) {
         participant_count.push(result.data[i].participant_count);
         title.push(result.data[i].title);
         updated_at.push(dateChange(result.data[i].updated_at));
-        name.push(result.includes.users[i].name);
-        username.push(result.includes.users[i].username);
-        profile_image_url.push(result.includes.users[i].profile_image_url);
+        for(j = 0; j < result.data.length; j++){
+            if(result.includes.users[j].id == creator_id[i]){
+                index = j;
+                j = creator_id;
+            }
+        }
+        name.push(result.includes.users[index].name);
+        username.push(result.includes.users[index].username);
+        profile_image_url.push(result.includes.users[index].profile_image_url);
     }
     return({
         "creator_id": creator_id, "id": id, "participant_count": participant_count, "title": title,
