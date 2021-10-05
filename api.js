@@ -50,7 +50,8 @@ app.get('/api/twitter', async(req, res) => {
         jsonResult = "api.js error : " + err;
     });
 
-    var usernot = jsonResult.errors;
+    //Check if there is a space hosted by private accounts
+    let usernot = jsonResult.errors;
     if(bool) {
         if(usernot == undefined) {
             console.log("no error");
@@ -150,6 +151,8 @@ function spaceResult(result) {
     });
 }
 
+
+//Delete milliseconds
 function dateChange(date) {
     let dt = date.split(".");
     date = dt[0] + "Z";　//ISO8601 ends with Z
