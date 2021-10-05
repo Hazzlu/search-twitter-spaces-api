@@ -38,16 +38,20 @@ app.get('/api/twitter', async(req, res) => {
 
     let jsonResult;
 
-    await jsonget(encodeURI(reqUrl),header)
+    await jsonget(encodeURI(reqUri),header)
     .then(function (json) {
         console.log(json);
         jsonResult = json;
         bool = true;
     })
     .catch(function (err) {
-        bool = false;
-        console.log("api.js error : " + err);
-        jsonResult = "api.js error : " + err;
+        console.log("meta: " + jsonResult);
+        if(jsonResult.meta.result_count != 0) {
+            bool = false;
+            console.log("api.js error : " + err);
+            jsonResult = "api.js error : " + err;
+        }
+        
     });
 
     //Check if there is a space hosted by private accounts
