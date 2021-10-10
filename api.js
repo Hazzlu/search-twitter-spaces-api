@@ -13,17 +13,27 @@ app.get('/', function(request, response) {
 
 
 app.get('/api/twitter', async(req, res) => {
-    let rq = require('request-promise');
-
+    
+    const rq = require('request-promise');
     res.set({"Access-Control-Allow-Origin" : `${URL}`});
 
-    let header = {"Authorization" : `Bearer ${TOKEN}`};
-    
-    let reqUri = "https://api.twitter.com/2/spaces/search?query=" + req.query.text
+    // these won't be changed later so const is better. 
+    const header = {"Authorization" : `Bearer ${TOKEN}`};
+    const reqUri = "https://api.twitter.com/2/spaces/search?query=" + req.query.text
                     + "&state=live&space.fields=participant_count,title,updated_at&expansions=creator_id&user.fields=username,profile_image_url"
     
-    let bool = true;
+    let bool = true;  // Unclear intention
     
+    /*
+    I think getjson is better. 
+    https://github.com/search?q=getjson
+    https://github.com/search?q=jsonget
+    *This is also a function.
+    
+    use const in func. 
+
+    It might be better to unify function() and arrow function, which has a difference in scope in `this` but which is not used here. 
+    */
     let jsonget = function(uri, header) {
         let options = {
             'method': 'GET',
@@ -56,6 +66,9 @@ app.get('/api/twitter', async(req, res) => {
     });
 
     //Check if there is a space hosted by private accounts
+
+    // usernot is pretty bad. Also use const. 
+    // Do we really need usernot?
     let usernot = jsonResult.errors;
     if(bool) {
         if(usernot == undefined) {
