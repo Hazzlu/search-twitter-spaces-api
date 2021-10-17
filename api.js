@@ -5,6 +5,7 @@ const app = express();
 
 const TOKEN = process.env.TOKEN;
 const URL = process.env.URL;
+const URL2 = process.env.URL2;
 const PORT = process.env.PORT || 5000;
 
 app.get('/', function(request, response) {
@@ -15,7 +16,7 @@ app.get('/', function(request, response) {
 app.get('/api/twitter', async(req, res) => {
     let rq = require('request-promise');
 
-    res.set({"Access-Control-Allow-Origin" : `${URL}`});
+    res.set({"Access-Control-Allow-Origin" : `${URL}` || `${URL2}`});
 
     let header = {"Authorization" : `Bearer ${TOKEN}`};
     
