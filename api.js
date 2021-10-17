@@ -4,8 +4,7 @@ const express = require('express');
 const app = express();
 
 const TOKEN = process.env.TOKEN;
-const URL = process.env.URL;
-const URL2 = process.env.URL2;
+const URL = process.env.URL || "http://localhost:3000";
 const PORT = process.env.PORT || 5000;
 
 app.get('/', function(request, response) {
